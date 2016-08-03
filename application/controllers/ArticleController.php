@@ -104,7 +104,7 @@ class ArticleController extends CI_Controller
      */
     public function article($article)
     {
-        $article = $this->article->getOneWithAuthorAndCommentaries($article);
+        $article = $this->article->getOneWithAuthor($article);
 
         if (! $article) {
             show_404();

@@ -15,8 +15,9 @@ $route['article/new']['get'] = 'ArticleController/getCreate';
 $route['article/new']['post'] = 'ArticleController/postCreate';
 $route['article/edit/(:num)']['get'] = 'ArticleController/getEdit/$1';
 $route['article/edit/(:num)']['post'] = 'ArticleController/postEdit/$1';
+$route['article/(:num)/comments']['get'] = 'CommentaryController/get/$1';
 
-$route['comment']['post'] = 'CommentaryController/post';
+$route['comment/leave']['POST'] = 'CommentaryController/post';
 
 $route['auth/signup']['get']  = 'AuthController/getSignup';
 $route['auth/signup']['post'] = 'AuthController/postSignup';

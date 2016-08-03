@@ -90,13 +90,11 @@ class Auth
      */
     public function user()
     {
-        if ($this->isLogin()) {
-            if (! isset(self::$instance)) {
-                self::$instance = $this->application->user->getById($this->application->session->user);
-            }
-
-            return self::$instance ;
+        if (! isset(self::$instance)) {
+            self::$instance = $this->application->user->getById($this->application->session->user);
         }
+
+        return self::$instance ;
     }
 
     /**

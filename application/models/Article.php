@@ -1,10 +1,11 @@
 <?php
 
 include_once 'Truncatable.php';
+include_once 'HaveAuthor.php';
 
 class Article extends CI_Model
 {
-    use Truncatable;
+    use Truncatable, HaveAuthor;
 
     /**
      * @var string
@@ -14,38 +15,6 @@ class Article extends CI_Model
      public function __construct()
     {
         $this->load->database();
-    }
-
-    /**
-     * @param  array  $ids
-     * @return array
-     */
-    public function authors(array $ids)
-    {
-        return $this->db->select('id, name, surname')
-            ->where_in('id', $ids)
-            ->from('users')
-            ->order_by('id', 'ASC')
-            ->get()
-            ->result();
-    }
-
-    /**
-     * @param  array $subjects
-     * @param  array $authors
-     * @return null
-     */
-    private function mergeAuthorsById(array $subjects, array $authors)
-    {
-        $sortedAuthotrs = [];
-
-        foreach ($authors as $author) {
-            $sortedAuthotrs[$author->id] = $author;
-        }
-
-        foreach ($subjects as $subject) {
-            $subject->author = $sortedAuthotrs[$subject->user_id];
-        }
     }
 
     /**
@@ -145,7 +114,7 @@ class Article extends CI_Model
      * @param  integer $article
      * @return object | null
      */
-    public function getOneWithAuthorAndCommentaries($article)
+    public function getOneWithAuthor($article)
     {
         $article = $this->getById($article);
 
@@ -159,32 +128,6 @@ class Article extends CI_Model
             ->row();
 
         $article->author = $author;
-
-        $commentaries = $this->db->where('article_id', $article->id)
-            ->from('commentaries')
-            ->order_by('leave_at', 'DESC')
-            ->get()
-            ->result();
-
-        if (! $commentaries) {
-            $article->commentaries = [];
-            
-            return $article;
-        }
-
-        $commentariesAuthorsIds = [];
-
-        foreach ($commentaries as $commentary) {
-            $commentariesAuthorsIds[] = $commentary->user_id;
-        }
-
-        $commentariesAuthorsIds = array_unique($commentariesAuthorsIds);
-
-        $commentariesAuthors = $this->authors($commentariesAuthorsIds);
-
-        $this->mergeAuthorsById($commentaries, $commentariesAuthors);
-
-        $article->commentaries = $commentaries;
 
         return $article;
     }
