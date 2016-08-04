@@ -26,7 +26,7 @@ class Auth
     /**
      * @param  string $email
      * @param  string $password
-     * @return null
+     * @return bool
      */
     public function login($email, $password)
     {
@@ -54,7 +54,7 @@ class Auth
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isLogin()
     {
@@ -62,7 +62,7 @@ class Auth
     }
 
     /**
-     * @return null | redirect
+     * @return null | view
      */
     public function check()
     {
@@ -73,7 +73,7 @@ class Auth
 
     /**
      * @param  object $object
-     * @return boolean
+     * @return bool
      * @throws Exception 
      */
     public function isOwner($object)

@@ -15,7 +15,7 @@ class CommentaryController extends CI_Controller
     }
 
     /**
-     * @return view
+     * @return string
      */
     public function post()
     {

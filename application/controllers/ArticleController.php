@@ -71,7 +71,7 @@ class ArticleController extends CI_Controller
     }
 
     /**
-     * @return null
+     * @return view
      */
     public function index()
     {
